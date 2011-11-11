@@ -1,0 +1,19 @@
+{
+	"services": {
+		"cxf": {
+			"title": "Apache CXF 2.4.0 service",
+			"directory": "cxf",
+			"startcmd": "make runserver",
+			"wsdl": "{endpoint_url}?wsdl",
+			"cleancmd": "make clean"
+		}
+	},
+	"consumers": {
+		"suds": {
+			"title": "SUDS 0.3.9 client",
+			"directory": "suds",
+			"startcmd": "python client.py",
+			"expected": "[Hello, World, Hello, World, Hello, World]\n"
+		}
+	}
+}
