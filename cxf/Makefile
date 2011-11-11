@@ -19,7 +19,7 @@ runclient: Client.class
 
 service:
 	JAVA_HOME=$(shell readlink -f $(shell which javac) | sed 's/bin.*$$//') \
-		$(CXF)/bin/wsdl2java -frontend jaxws21 'http://localhost:8080/ur/?wsdl'
+		$(CXF)/bin/wsdl2java -frontend jaxws21 '${WSDL_URL}'
 
 clean:
 	rm -rf $(ALLCLASS) hu
