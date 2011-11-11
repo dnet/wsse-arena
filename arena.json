@@ -1,7 +1,7 @@
 {
 	"services": {
 		"cxf": {
-			"title": "Apache CXF 2.4.0 service",
+			"title": "Apache CXF 2.5.0 service",
 			"directory": "cxf",
 			"startcmd": "make runserver 2>&1 | grep -v 'Error 143' 1>&2",
 			"wsdl": "{endpoint_url}?wsdl",
