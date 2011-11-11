@@ -14,6 +14,13 @@
 			"directory": "suds",
 			"startcmd": "python client.py",
 			"expected": "[Hello, World, Hello, World, Hello, World]\n"
+		},
+		"cxf": {
+			"title": "Apache CXF 2.5.0 client",
+			"directory": "cxf",
+			"startcmd": "make service runclient",
+			"expected": "[Hello, World, Hello, World, Hello, World, ]\n",
+			"cleancmd": "make clean"
 		}
 	}
 }
