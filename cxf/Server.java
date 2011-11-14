@@ -21,15 +21,20 @@ public class Server {
 			WSS4JInInterceptor wssIn = new WSS4JInInterceptor(inProps);
 			cxfEndpoint.getInInterceptors().add(wssIn);
 
-			inProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
-			if (System.getenv("PLAIN") != null) {
-				// Password type : plain text
-				inProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+			if (System.getenv("SIGN") != null) {
+				inProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.SIGNATURE);
+				inProps.put(WSHandlerConstants.SIG_PROP_FILE, "server.properties");
 			} else {
-				// for hashed password use:
-				inProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_DIGEST);
+				inProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
+				if (System.getenv("PLAIN") != null) {
+					// Password type : plain text
+					inProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+				} else {
+					// for hashed password use:
+					inProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_DIGEST);
+				}
 			}
-			inProps.put(WSHandlerConstants.PW_CALLBACK_CLASS, 
+			inProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
 					UserValidator.class.getName());
 		}
 	}
