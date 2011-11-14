@@ -22,20 +22,25 @@ public class Client implements CallbackHandler {
 			WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(outProps);
 			cxfEndpoint.getOutInterceptors().add(wssOut);
 
-			outProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
-			// Specify our username
-			outProps.put(WSHandlerConstants.USER, "admin");
-			if (System.getenv("PLAIN") != null) {
-				// Password type : plain text
-				outProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+			if (System.getenv("SIGN") != null) {
+				outProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.SIGNATURE);
+				outProps.put(WSHandlerConstants.USER, "myAlias");
+				outProps.put(WSHandlerConstants.SIG_PROP_FILE, "client_sign.properties");
 			} else {
-				// for hashed password use:
-				outProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_DIGEST);
+				outProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
+				// Specify our username
+				outProps.put(WSHandlerConstants.USER, "admin");
+				if (System.getenv("PLAIN") != null) {
+					// Password type : plain text
+					outProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+				} else {
+					// for hashed password use:
+					outProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_DIGEST);
+				}
+				// Callback used to retrieve password for given user.
+				outProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
+					Client.class.getName());
 			}
-			// Callback used to retrieve password for given user.
-			outProps.put(WSHandlerConstants.PW_CALLBACK_CLASS, 
-				Client.class.getName());
-
 		}
 		System.out.print("[");
 		for (String s : hw.sayHello("World", 3)) {
