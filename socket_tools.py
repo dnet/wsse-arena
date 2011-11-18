@@ -1,21 +1,12 @@
 #!/usr/bin/env python
 
-from __future__ import division
-import socket, time
+import socket
 
-def ensure_listener(host, port, timeout):
-    start = time.time()
-    while time.time() < start + timeout / 1000:
-        sock = socket.socket()
-        try:
-            sock.connect((host, port))
-        except socket.error:
-            time.sleep(0.01)
-        else:
-            return
-        finally:
-            sock.close()
-    raise RuntimeError('Listener timeout')
+def get_listener():
+	sock = socket.socket()
+	sock.bind(('127.0.0.1', 0))
+	sock.listen(1)
+	return sock
 
 def get_free_portnum(host):
     sock = socket.socket()

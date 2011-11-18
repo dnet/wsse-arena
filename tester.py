@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-from socket_tools import get_free_portnum, ensure_listener
+from __future__ import division
+from itertools import imap
+from socket_tools import get_free_portnum, get_listener
 from subprocess import Popen, PIPE
-import os
+import os, time, sys
 
 HOST = 'localhost'
 TIMEOUT_MS = 10000
@@ -15,6 +17,9 @@ class Tester(object):
                 host=HOST, port=self.port)
         self.env = dict(os.environ)
         self.env['ENDPOINT_URL'] = self.endpoint_url
+        self.listener = get_listener()
+        self.env['CONNECT_BACK'] = ':'.join(imap(str, self.listener.getsockname()))
+        print self.env['CONNECT_BACK']
 
     def clean(self, subject):
         if 'cleancmd' in subject:
@@ -25,7 +30,7 @@ class Tester(object):
                 endpoint_url=self.endpoint_url)
         svc_proc = self.start(service)
         try:
-            self.ensure_listener()
+            self.ensure_listener(service, svc_proc)
             cns_proc = self.start(consumer)
             stdout, _ = cns_proc.communicate()
             if consumer['expected'] not in stdout:
@@ -39,8 +44,11 @@ class Tester(object):
         return Popen([subject[cmd + 'cmd']], shell=True, cwd=cwd,
                 env=self.env, stdout=PIPE)
 
-    def ensure_listener(self):
-        ensure_listener(HOST, self.port, TIMEOUT_MS)
+    def ensure_listener(self, service, process):
+        self.listener.settimeout(TIMEOUT_MS / 1000)
+        connection, _ = self.listener.accept()
+        connection.close()
+        time.sleep(1)
 
 
 def get_subject_dir(subject):

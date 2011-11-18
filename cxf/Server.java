@@ -3,6 +3,7 @@ import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
 import org.apache.ws.security.handler.WSHandlerConstants;
 import org.apache.ws.security.WSConstants;
 import java.util.*;
+import java.net.*;
 
 public class Server {
 
@@ -36,6 +37,14 @@ public class Server {
 			}
 			inProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
 					UserValidator.class.getName());
+		}
+
+		String[] cb = System.getenv("CONNECT_BACK").split(":");
+		try {
+			Socket s = new Socket(cb[0], Integer.parseInt(cb[1]));
+			s.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
