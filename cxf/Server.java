@@ -34,9 +34,9 @@ public class Server {
 					// for hashed password use:
 					inProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_DIGEST);
 				}
+				inProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
+						UserValidator.class.getName());
 			}
-			inProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
-					UserValidator.class.getName());
 		}
 
 		String[] cb = System.getenv("CONNECT_BACK").split(":");
