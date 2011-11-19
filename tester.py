@@ -31,7 +31,7 @@ class Tester(object):
         svc_proc = self.start(service)
         try:
             self.ensure_listener(service, svc_proc)
-            cns_proc = self.start(consumer)
+            cns_proc = self.start(consumer, stdout=PIPE)
             stdout, _ = cns_proc.communicate()
             if consumer['expected'] not in stdout:
                 raise RuntimeError('Unexpected output: "{0}"'.format(stdout))
@@ -39,10 +39,10 @@ class Tester(object):
             svc_proc.terminate()
             svc_proc.wait()
 
-    def start(self, subject, cmd='start'):
+    def start(self, subject, cmd='start', stdout=None):
         cwd = get_subject_dir(subject)
         return Popen([subject[cmd + 'cmd']], shell=True, cwd=cwd,
-                env=self.env, stdout=PIPE)
+                env=self.env, stdout=stdout)
 
     def ensure_listener(self, service, process):
         self.listener.settimeout(TIMEOUT_MS / 1000)
