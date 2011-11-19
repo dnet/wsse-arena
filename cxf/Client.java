@@ -38,9 +38,9 @@ public class Client implements CallbackHandler {
 					outProps.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_DIGEST);
 				}
 				// Callback used to retrieve password for given user.
-				outProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
-					Client.class.getName());
 			}
+			outProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
+				Client.class.getName());
 		}
 		System.out.print("[");
 		for (String s : hw.sayHello("World", 3)) {
@@ -56,7 +56,7 @@ public class Client implements CallbackHandler {
         WSPasswordCallback pc = (WSPasswordCallback) callbacks[0];
 
         // set the password for our message.
-        pc.setPassword("nimda");
+        pc.setPassword(System.getenv("SIGN") != null ? "myAliasPassword" : "nimda");
     }
 
 }
