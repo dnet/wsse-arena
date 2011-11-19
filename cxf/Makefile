@@ -3,7 +3,12 @@ CXF=$(shell stat --format %n apache-cxf-*)
 JARS=$(shell ls $(CXF)/lib{/endorsed,}/*.jar | tr '\n' ' ')
 CLASSPATH=$(shell echo '$(JARS)' | tr ' ' ':').
 JAVAC=javac -cp $(CLASSPATH)
-JAVA=java -cp $(CLASSPATH)
+ifeq ($(DEBUG), 1)
+	LOGGING="-Djava.util.logging.config.file=logging.properties"
+else
+	LOGGING=
+endif
+JAVA=java $(LOGGING) -cp $(CLASSPATH)
 ALLCLASS=*.class
 
 all: $(CLASSES)
