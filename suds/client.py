@@ -17,4 +17,6 @@ if 'SECURE' in environ and 'SIGN' not in environ:
     security.tokens.append(token)
     c.set_options(wsse = security)
 
-print c.service.say_hello('World', 3)
+times = int(environ['TIMES']) if 'TIMES' in environ else 1
+for _ in xrange(times):
+	print c.service.say_hello('World', 3)

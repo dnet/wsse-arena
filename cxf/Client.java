@@ -42,12 +42,16 @@ public class Client implements CallbackHandler {
 			outProps.put(WSHandlerConstants.PW_CALLBACK_CLASS,
 				Client.class.getName());
 		}
-		System.out.print("[");
-		for (String s : hw.sayHello("World", 3)) {
-			System.out.print(s);
-			System.out.print(", ");
+		String times_env = System.getenv("TIMES");
+		int times = times_env == null ? 1 : Integer.parseInt(times_env);
+		for (int i = 0; i < times; i++) {
+			System.out.print("[");
+			for (String s : hw.sayHello("World", 3)) {
+				System.out.print(s);
+				System.out.print(", ");
+			}
+			System.out.println("]");
 		}
-		System.out.println("]");
 	}
 
 	public void handle(Callback[] callbacks) throws IOException, 
