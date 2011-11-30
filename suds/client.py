@@ -10,6 +10,12 @@ if 'SIGN' in environ:
 
 c = client.Client(environ['WSDL_URL'], plugins=plugins)
 
+if 'SIGN' in environ:
+    from suds.wsse import Security, Timestamp
+    security = Security()
+    security.tokens.append(Timestamp())
+    c.set_options(wsse = security)
+
 if 'SECURE' in environ and 'SIGN' not in environ:
     from suds.wsse import Security, UsernameToken
     security = Security()

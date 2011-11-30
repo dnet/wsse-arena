@@ -23,7 +23,7 @@ public class Server {
 			cxfEndpoint.getInInterceptors().add(wssIn);
 
 			if (System.getenv("SIGN") != null) {
-				inProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.SIGNATURE);
+				inProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.SIGNATURE + " " + WSHandlerConstants.TIMESTAMP);
 				inProps.put(WSHandlerConstants.SIG_PROP_FILE, "server.properties");
 			} else {
 				inProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);

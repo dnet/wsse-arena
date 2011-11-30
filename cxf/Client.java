@@ -23,7 +23,8 @@ public class Client implements CallbackHandler {
 			cxfEndpoint.getOutInterceptors().add(wssOut);
 
 			if (System.getenv("SIGN") != null) {
-				outProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.SIGNATURE);
+				outProps.put(WSHandlerConstants.ACTION, WSHandlerConstants.SIGNATURE +
+						" " + WSHandlerConstants.TIMESTAMP);
 				outProps.put(WSHandlerConstants.USER, "myAlias");
 				outProps.put(WSHandlerConstants.SIG_PROP_FILE, "client_sign.properties");
 			} else {
