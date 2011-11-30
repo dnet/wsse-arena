@@ -21,6 +21,12 @@
 			"startcmd": "make service runclient",
 			"expected": "[Hello, World, Hello, World, Hello, World, ]\n",
 			"cleancmd": "make clean"
+		},
+		"curl": {
+			"title": "cURL debug client",
+			"directory": "curl",
+			"startcmd": "sh client.sh",
+			"expected": "<return>Hello, World</return><return>Hello, World</return><return>Hello, World</return>"
 		}
 	}
 }
