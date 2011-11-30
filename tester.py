@@ -19,7 +19,6 @@ class Tester(object):
         self.env['ENDPOINT_URL'] = self.endpoint_url
         self.listener = get_listener()
         self.env['CONNECT_BACK'] = ':'.join(imap(str, self.listener.getsockname()))
-        print self.env['CONNECT_BACK']
 
     def clean(self, subject):
         if 'cleancmd' in subject:
