@@ -7,7 +7,7 @@ from subprocess import Popen, PIPE
 import os, time, sys
 
 HOST = 'localhost'
-TIMEOUT_MS = 10000
+TIMEOUT_MS = 20000
 CUR_DIR = os.getcwd()
 
 class Tester(object):
