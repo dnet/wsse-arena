@@ -20,6 +20,9 @@ class Tester(object):
         self.listener = get_listener()
         self.env['CONNECT_BACK'] = ':'.join(imap(str, self.listener.getsockname()))
 
+    def extend_env(self, value):
+        self.env.update(value)
+
     def clean(self, subject):
         if 'cleancmd' in subject:
             self.start(subject, 'clean').wait()

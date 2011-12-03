@@ -28,5 +28,31 @@
 			"startcmd": "sh client.sh",
 			"expected": "<return>Hello, World</return><return>Hello, World</return><return>Hello, World</return>"
 		}
+	},
+	"suites": {
+		"public": {
+			"title": "SOAP invocation without any security",
+			"env": []
+		},
+		"usernametoken_plain": {
+			"title": "UsernameToken with plaintext password",
+			"env": ["SECURE", "PLAIN"]
+		},
+		"usernametoken_digest": {
+			"title": "UsernameToken with digest password",
+			"env": ["SECURE"]
+		},
+		"signed": {
+			"title": "Digitally signed message",
+			"env": ["SECURE", "SIGN"]
+		},
+		"signed_timestamped": {
+			"title": "Digitally signed message with timestamp",
+			"env": ["SECURE", "SIGN", "TIMESTAMP"]
+		}
+	},
+	"measurement": {
+		"runs": 5,
+		"repeats": [1, 10, 100]
 	}
 }

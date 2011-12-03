@@ -6,12 +6,16 @@ from os import linesep
 USAGE = """Usage:
 \tPair test: {progname} test <service> <consumer>
 \tClean:     {progname} clean [service|consumer] <name>
+\tMeasure:   {progname} measure [suite] [repeats] [runs]
 
 Available service(s):
 {services}
 
 Available consumer(s):
 {consumers}
+
+Available suite(s):
+{suites}
 """
 
 def usage_format(options):

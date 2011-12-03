@@ -7,10 +7,12 @@ import hu.vsza.bme.*;
 import java.io.IOException;
 import javax.security.auth.callback.*;
 import org.apache.ws.security.WSPasswordCallback;
+import java.io.FileWriter;
 
 public class Client implements CallbackHandler {
 
-	public static void main(String[] params) {
+	public static void main(String[] params) throws java.io.IOException {
+        long before_setup = System.currentTimeMillis();
 		HelloWorldService hws = new HelloWorldService();
 		hu.vsza.bme.HelloWorld hw = hws.getHelloWorldPort();
 		if (System.getenv("SECURE") != null) {
@@ -46,6 +48,7 @@ public class Client implements CallbackHandler {
 		}
 		String times_env = System.getenv("TIMES");
 		int times = times_env == null ? 1 : Integer.parseInt(times_env);
+        long after_setup = System.currentTimeMillis();
 		for (int i = 0; i < times; i++) {
 			System.out.print("[");
 			for (String s : hw.sayHello("World", 3)) {
@@ -54,6 +57,17 @@ public class Client implements CallbackHandler {
 			}
 			System.out.println("]");
 		}
+        long after_invoke = System.currentTimeMillis();
+        if (System.getenv("CSV_FILE") != null) {
+            String csvout = "\r\n" + System.getenv("CSV_PREFIX") + ";" +
+                (after_setup - before_setup) + ";" + (after_invoke - after_setup);
+            FileWriter fw = new FileWriter(System.getenv("CSV_FILE"), true);
+            try {
+                fw.write(csvout, 0, csvout.length());
+            } finally {
+                fw.close();
+            }
+        }
 	}
 
 	public void handle(Callback[] callbacks) throws IOException, 
