@@ -10,7 +10,7 @@ if 'SIGN' in environ:
 
 c = client.Client(environ['WSDL_URL'], plugins=plugins)
 
-if 'SIGN' in environ:
+if 'TIMESTAMP' in environ:
     from suds.wsse import Security, Timestamp
     security = Security()
     security.tokens.append(Timestamp())
