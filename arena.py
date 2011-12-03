@@ -30,14 +30,14 @@ def main(args):
                 suites = sts_list.itervalues()
             else:
                 suites = [resolve(sts_list, args[2], 'suite')]
-                if len(args) < 4:
-                    repeats = config['measurement']['repeats']
-                else:
-                    repeats = [int(args[3])]
-                    if len(args) < 5:
-                        runs = config['measurement']['runs']
-                    else:
-                        runs = int(args[4])
+            if len(args) < 4:
+                repeats = config['measurement']['repeats']
+            else:
+                repeats = [int(args[3])]
+            if len(args) < 5:
+                runs = config['measurement']['runs']
+            else:
+                runs = int(args[4])
             measure(suites, repeats, runs, svc_list, cns_list)
         else:
             exit_errmsg('Invalid command: "{0}"'.format(args[1]))
