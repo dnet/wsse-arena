@@ -27,7 +27,7 @@ def main(args):
             tst.clean(config[args[2] + 's'][args[3]])
         elif args[1] == 'measure':
             if len(args) < 3:
-                suites = sts_list
+                suites = sts_list.itervalues()
             else:
                 suites = [resolve(sts_list, args[2], 'suite')]
                 if len(args) < 4:
