@@ -18,7 +18,7 @@
 		"cxf": {
 			"title": "Apache CXF 2.5.0 client",
 			"directory": "cxf",
-			"startcmd": "make service runclient",
+			"startcmd": "rm -rf hu Client.class ; make service runclient",
 			"expected": "[Hello, World, Hello, World, Hello, World, ]\n",
 			"cleancmd": "make clean"
 		},
